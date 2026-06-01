@@ -27,7 +27,7 @@ public class RoutingController {
             @ApiResponse(responseCode = "400", description = "Invalid request"),
             @ApiResponse(responseCode = "500", description = "Failed all strategies")
     })
-    @PostMapping
+    @PostMapping("/input")
     @ResponseStatus(HttpStatus.CREATED)
     public void criar(@Validated @RequestBody InputDTO dto) {
         service.process(dto.getInteger());
