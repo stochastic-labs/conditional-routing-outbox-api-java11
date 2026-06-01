@@ -1,6 +1,5 @@
 package com.stochasticlabs.conditionalroutingoutboxapijava11.service;
 
-import com.stochasticlabs.conditionalroutingoutboxapijava11.dto.InputDTO;
 import com.stochasticlabs.conditionalroutingoutboxapijava11.strategy.RoutingStrategy;
 import org.springframework.stereotype.Service;
 
