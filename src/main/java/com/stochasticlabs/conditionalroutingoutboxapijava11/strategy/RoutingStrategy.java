@@ -1,6 +1,9 @@
 package com.stochasticlabs.conditionalroutingoutboxapijava11.strategy;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.stochasticlabs.conditionalroutingoutboxapijava11.entity.Input;
+
 public interface RoutingStrategy {
-    boolean isEligible(Integer number);
-    void route(Integer number);
+    boolean validate(Input input);
+    void execute(Input input) throws JsonProcessingException;
 }

@@ -1,18 +1,30 @@
 package com.stochasticlabs.conditionalroutingoutboxapijava11.strategy;
 
-import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.stochasticlabs.conditionalroutingoutboxapijava11.entity.Input;
+import com.stochasticlabs.conditionalroutingoutboxapijava11.service.KafkaProducerService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
-@Component
+@Slf4j
+@Service
+@RequiredArgsConstructor
 public class KafkaRoutingStrategy implements RoutingStrategy {
 
+    private final KafkaProducerService kafkaProducerService;
+
+    private final ObjectMapper objectMapper;
+
     @Override
-    public boolean isEligible(Integer number) {
-        return number % 2 == 0;
+    public boolean validate(Input input) {
+        return input.getInteger() % 2 == 0;
     }
 
     @Override
-    public void route(Integer number) {
-        System.out.println("Send [" + number + "] to KAFKA.");
-        // TODO: kafkaTemplate.send(...)
+    public void execute(Input input) throws JsonProcessingException {
+        log.info("Send [" + input.getInteger() + "] to KAFKA.");
+        kafkaProducerService.sendMessage("stochastic-input", objectMapper.writeValueAsString(input));
     }
 }
