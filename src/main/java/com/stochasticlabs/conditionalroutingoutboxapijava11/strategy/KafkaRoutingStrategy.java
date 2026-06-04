@@ -24,7 +24,7 @@ public class KafkaRoutingStrategy implements RoutingStrategy {
 
     @Override
     public void execute(Input input) throws JsonProcessingException {
-        log.info("Send [" + input.getInteger() + "] to KAFKA.");
+        log.info("kafka-routing-strategy-execute: Send [" + input.getInteger() + "] to KAFKA.");
         kafkaProducerService.sendMessage("stochastic-input", objectMapper.writeValueAsString(input));
     }
 }

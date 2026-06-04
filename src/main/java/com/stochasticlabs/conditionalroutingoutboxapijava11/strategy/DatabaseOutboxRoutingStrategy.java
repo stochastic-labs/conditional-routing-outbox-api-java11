@@ -28,7 +28,7 @@ public class DatabaseOutboxRoutingStrategy implements RoutingStrategy {
 
     @Override
     public void execute(Input input) throws JsonProcessingException {
-        log.info("Send [" + input.getInteger() + "] to DB.");
+        log.info("database-outbox-routing-strategy-execute: Send [" + input.getInteger() + "] to DB.");
         Outbox outbox = Outbox.builder()
                 .topic("stochastic-input")
                 .payload(objectMapper.writeValueAsString(input))
