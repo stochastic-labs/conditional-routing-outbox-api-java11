@@ -1,9 +1,14 @@
 package com.stochasticlabs.conditionalroutingoutboxapijava11.service;
 
+import com.stochasticlabs.conditionalroutingoutboxapijava11.dto.InputDTO;
+import com.stochasticlabs.conditionalroutingoutboxapijava11.entity.Input;
+import com.stochasticlabs.conditionalroutingoutboxapijava11.factory.InputFactory;
 import com.stochasticlabs.conditionalroutingoutboxapijava11.strategy.RoutingStrategy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 @Service
@@ -15,9 +20,30 @@ public class RoutingService {
         this.strategies = strategies;
     }
 
-    public void process(Integer number) {
+    public void process(InputDTO inputDTO) {
+        Input input = InputFactory.create(inputDTO);
         List<RoutingStrategy> activeStrategies = strategies.stream()
-                .filter(strategy -> strategy.isEligible(number))
+                .filter(strategy -> strategy.validate(input))
                 .collect(Collectors.toList());
+
+        if (activeStrategies.isEmpty()) {
+            return;
+        }
+
+        ExecutorService executor = Executors.newFixedThreadPool(Math.min(activeStrategies.size(), 10));
+
+        try {
+            activeStrategies.forEach(strategy -> {
+                executor.submit(() -> {
+                    try {
+                        strategy.execute(input);
+                    } catch (Exception e) {
+                        System.err.println("Erro ao rodar estratégia: " + e.getMessage());
+                    }
+                });
+            });
+        } finally {
+            executor.shutdown();
+        }
     }
 }
