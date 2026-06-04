@@ -1,2 +1,8 @@
 server:
-  port: 8081
+  port: ${SERVER_PORT:8081}
+
+spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
+    producer:
+      acks: all
