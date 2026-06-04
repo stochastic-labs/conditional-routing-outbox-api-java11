@@ -6,6 +6,7 @@ import com.stochasticlabs.conditionalroutingoutboxapijava11.entity.Input;
 import com.stochasticlabs.conditionalroutingoutboxapijava11.service.KafkaProducerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -17,6 +18,9 @@ public class KafkaRoutingStrategy implements RoutingStrategy {
 
     private final ObjectMapper objectMapper;
 
+    @Value("${app.messaging.input-topic}")
+    private String topic;
+
     @Override
     public boolean validate(Input input) {
         return input.getInteger() % 2 == 0;
@@ -25,6 +29,6 @@ public class KafkaRoutingStrategy implements RoutingStrategy {
     @Override
     public void execute(Input input) throws JsonProcessingException {
         log.info("kafka-routing-strategy-execute: Send [" + input.getInteger() + "] to KAFKA.");
-        kafkaProducerService.sendMessage("stochastic-input", objectMapper.writeValueAsString(input));
+        kafkaProducerService.sendMessage(topic, objectMapper.writeValueAsString(input));
     }
 }

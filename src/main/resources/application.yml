@@ -1,4 +1,6 @@
 app:
+  messaging:
+    input-topic: ${APP_MESSAGING_INPUT_TOPIC:stochastic-input}
   outbox:
     enabled: ${APP_OUTBOX_ENABLED:true}
     interval: ${APP_OUTBOX_INTERVAL:5000}

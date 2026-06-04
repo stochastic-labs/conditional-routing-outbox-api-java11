@@ -8,6 +8,7 @@ import com.stochasticlabs.conditionalroutingoutboxapijava11.entity.Outbox;
 import com.stochasticlabs.conditionalroutingoutboxapijava11.repository.OutboxRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,6 +22,9 @@ public class DatabaseOutboxRoutingStrategy implements RoutingStrategy {
 
     private final ObjectMapper objectMapper;
 
+    @Value("${app.messaging.input-topic}")
+    private String topic;
+
     @Override
     public boolean validate(Input input) {
         return input.getInteger() % 2 != 0;
@@ -30,7 +34,7 @@ public class DatabaseOutboxRoutingStrategy implements RoutingStrategy {
     public void execute(Input input) throws JsonProcessingException {
         log.info("database-outbox-routing-strategy-execute: Send [" + input.getInteger() + "] to DB.");
         Outbox outbox = Outbox.builder()
-                .topic("stochastic-input")
+                .topic(topic)
                 .payload(objectMapper.writeValueAsString(input))
                 .status(OutboxStatus.PENDING)
                 .createdAt(LocalDateTime.now())
