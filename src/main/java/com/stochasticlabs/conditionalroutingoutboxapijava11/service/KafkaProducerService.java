@@ -13,7 +13,7 @@ public class KafkaProducerService {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     public void sendMessage(String topic, String payload) {
-        log.info("Enviando mensagem para o tópico: {} {}", topic, payload);
+        log.info("Event send to topic: {} {}", topic, payload);
 
         kafkaTemplate.send(topic, payload)
                 .addCallback(
