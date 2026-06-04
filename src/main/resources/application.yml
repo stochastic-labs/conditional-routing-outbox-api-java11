@@ -1,3 +1,8 @@
+app:
+  outbox:
+    enabled: ${APP_OUTBOX_ENABLED:true}
+    interval: ${APP_OUTBOX_INTERVAL:5000}
+
 server:
   port: ${SERVER_PORT:8081}
 
