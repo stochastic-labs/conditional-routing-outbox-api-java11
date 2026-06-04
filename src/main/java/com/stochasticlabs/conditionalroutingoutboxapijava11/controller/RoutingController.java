@@ -30,6 +30,6 @@ public class RoutingController {
     @PostMapping("/input")
     @ResponseStatus(HttpStatus.CREATED)
     public void criar(@Validated @RequestBody InputDTO dto) {
-        service.process(dto.getInteger());
+        service.process(dto);
     }
 }
