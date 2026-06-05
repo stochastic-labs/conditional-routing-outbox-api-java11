@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/router")
 @Tag(name = "Router", description = "Endpoints to routing of payloads")
+@RequiredArgsConstructor
 public class RoutingController {
 
     private final RoutingService service;
-
-    public RoutingController(RoutingService service) {
-        this.service = service;
-    }
 
     @Operation(summary = "Process number", description = "Process number")
     @ApiResponses(value = {
@@ -29,7 +27,7 @@ public class RoutingController {
     })
     @PostMapping("/input")
     @ResponseStatus(HttpStatus.CREATED)
-    public void criar(@Validated @RequestBody InputDTO dto) {
+    public void create(@Validated @RequestBody InputDTO dto) {
         service.process(dto);
     }
 }
