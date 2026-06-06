@@ -1,7 +1,7 @@
 package com.stochasticlabs.conditionalroutingoutboxapijava11.controller;
 
 import com.stochasticlabs.conditionalroutingoutboxapijava11.domain.OutboxStatus;
-import com.stochasticlabs.conditionalroutingoutboxapijava11.entity.Outbox;
+import com.stochasticlabs.conditionalroutingoutboxapijava11.model.Outbox;
 import com.stochasticlabs.conditionalroutingoutboxapijava11.repository.OutboxRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

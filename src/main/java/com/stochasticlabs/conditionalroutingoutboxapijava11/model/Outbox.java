@@ -1,4 +1,4 @@
-package com.stochasticlabs.conditionalroutingoutboxapijava11.entity;
+package com.stochasticlabs.conditionalroutingoutboxapijava11.model;
 
 import com.stochasticlabs.conditionalroutingoutboxapijava11.domain.OutboxStatus;
 import lombok.AllArgsConstructor;
