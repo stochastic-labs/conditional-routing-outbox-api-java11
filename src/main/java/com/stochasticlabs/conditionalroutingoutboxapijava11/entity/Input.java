@@ -1,12 +1,26 @@
 package com.stochasticlabs.conditionalroutingoutboxapijava11.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Input {
-    private int integer;
+
+    private final int integer;
+
+    public Input(int integer) {
+        this.integer = integer;
+    }
+
+    public int getInteger() {
+        return integer;
+    }
+
+    public boolean useOutboxStrategy() {
+        return integer % 2 != 0;
+    }
+
+    public boolean useHttpStrategy() {
+        return integer % 5 == 0;
+    }
+
+    public boolean useKafkaStrategy() {
+        return integer % 2 == 0;
+    }
 }
