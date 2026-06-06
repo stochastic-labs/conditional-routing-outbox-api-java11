@@ -4,6 +4,7 @@ import com.stochasticlabs.conditionalroutingoutboxapijava11.dto.InputDTO;
 import com.stochasticlabs.conditionalroutingoutboxapijava11.entity.Input;
 import com.stochasticlabs.conditionalroutingoutboxapijava11.factory.InputFactory;
 import com.stochasticlabs.conditionalroutingoutboxapijava11.strategy.RoutingStrategy;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class RoutingService {
 
@@ -38,7 +40,7 @@ public class RoutingService {
                     try {
                         strategy.execute(input);
                     } catch (Exception e) {
-                        System.err.println("Erro ao rodar estratégia: " + e.getMessage());
+                        log.error("[routing-service-process] Error strategy: " + e.getMessage());
                     }
                 });
             });

@@ -13,12 +13,12 @@ public class KafkaProducerService {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     public void sendMessage(String topic, String payload) {
-        log.info("Event send to topic: {} {}", topic, payload);
+        log.info("[kafka-producer-service-send-message] Event send to topic: {} {}", topic, payload);
 
         kafkaTemplate.send(topic, payload)
                 .addCallback(
-                        success -> log.info("Success! Offset: {}", success.getRecordMetadata().offset()),
-                        failure -> log.error("Fail Kafka:", failure.getCause())
+                        success -> log.info("[kafka-producer-service-send-message] Success! Offset: {}", success.getRecordMetadata().offset()),
+                        failure -> log.error("[kafka-producer-service-send-message] Fail Kafka:", failure.getCause())
                 );
     }
 }

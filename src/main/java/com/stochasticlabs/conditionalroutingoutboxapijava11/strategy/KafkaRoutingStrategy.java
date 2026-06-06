@@ -23,12 +23,12 @@ public class KafkaRoutingStrategy implements RoutingStrategy {
 
     @Override
     public boolean validate(Input input) {
-        return input.getInteger() % 2 == 0;
+        return input.useKafkaStrategy();
     }
 
     @Override
     public void execute(Input input) throws JsonProcessingException {
-        log.info("kafka-routing-strategy-execute: Send [" + input.getInteger() + "] to KAFKA.");
+        log.info("[kafka-routing-strategy-execute] Send [" + input.getInteger() + "] to KAFKA.");
         kafkaProducerService.sendMessage(topic, objectMapper.writeValueAsString(input));
     }
 }

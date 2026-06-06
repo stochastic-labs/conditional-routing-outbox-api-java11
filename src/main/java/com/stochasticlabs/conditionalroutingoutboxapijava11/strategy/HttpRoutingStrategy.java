@@ -29,13 +29,13 @@ public class HttpRoutingStrategy implements RoutingStrategy {
 
     @Override
     public boolean validate(Input input) {
-        return input.getInteger() % 5 == 0;
+        return input.useHttpStrategy();
     }
 
     @Override
     @CircuitBreaker(name = "java17HttpStrategy", fallbackMethod = "fallbackHttpCall")
     public void execute(Input input) throws JsonProcessingException {
-        log.info("Send [" + input.getInteger() + "] to API.");
+        log.info("[http-routing-strategy-execute] Send [" + input.getInteger() + "] to API.");
 
         String jsonPayload = objectMapper.writeValueAsString(input);
 
@@ -50,19 +50,19 @@ public class HttpRoutingStrategy implements RoutingStrategy {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 201 || response.statusCode() == 200) {
-                log.info("HttpRoutingStrategy Success: Payload. Status: {}", response.statusCode());
+                log.info("[http-routing-strategy-execute] Success: Payload. Status: {}", response.statusCode());
             } else {
-                log.warn("HttpRoutingStrategy Fail HTTP: API {}. error Circuit Breaker.", response.statusCode());
+                log.warn("[http-routing-strategy-execute] Fail HTTP: API {}. error Circuit Breaker.", response.statusCode());
                 throw new RuntimeException("Fail");
             }
         } catch (Exception e) {
-            log.error("HttpRoutingStrategy Error: API Java 17.", e);
+            log.error("[http-routing-strategy-execute] Error: API Java 17.", e);
             throw new RuntimeException(e);
         }
     }
 
     public void fallbackHttpCall(Input input, Throwable t) {
-        log.error("🚨 [CIRCUIT BREAKER active / Fail Request] Payload [{}]. Error: {}",
+        log.error("[http-routing-strategy-fallback-http-call] [CIRCUIT BREAKER active] Payload [{}]. Error: {}",
                 input.getInteger(), t.getMessage());
     }
 }
