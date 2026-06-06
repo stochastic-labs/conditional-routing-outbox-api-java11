@@ -1,4 +1,6 @@
 app:
+  api:
+    http-enabled: ${APP_API_HTTP_ENABLED:true}
   services:
     java17-api-url: ${JAVA17_API_URL:http://localhost:8082}
   messaging:
@@ -12,7 +14,7 @@ resilience4j:
     instances:
       java17HttpStrategy:
         slidingWindowSize: 4
-        failureRateThreshold: 50
+        failureRateThreshold: 5
         waitDurationInOpenState: 10000
         permittedNumberOfCallsInHalfOpenState: 2
 
