@@ -12,7 +12,6 @@ public class ConditionalRoutingOutboxApiJava11Application {
         SpringApplication app = new SpringApplication(ConditionalRoutingOutboxApiJava11Application.class);
 
         String apiEnabled = System.getenv("APP_API_HTTP_ENABLED");
-
         if ("false".equalsIgnoreCase(apiEnabled)) {
             app.setWebApplicationType(WebApplicationType.NONE);
         }
