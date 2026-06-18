@@ -1,7 +1,7 @@
 .PHONY: build run test clean d-build d-run d-stop d-log
 
 APP_NAME=conditional-routing-outbox-api-java11
-DOCKER_IMAGE=stochasticlabs/routing-api:1.0.0
+DOCKER_IMAGE=stochasticlabs/conditional-routing-outbox-api-java11:1.0.0
 PORT=8081
 NETWORK=stochastic-labs-infra_stochastic-network
 ENV_FILE=.env
