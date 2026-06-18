@@ -1,23 +1,3 @@
-app:
-  api:
-    http-enabled: ${APP_API_HTTP_ENABLED:true}
-  services:
-    java17-api-url: ${JAVA17_API_URL:http://localhost:8082}
-  messaging:
-    input-topic: ${APP_MESSAGING_INPUT_TOPIC:stochastic-input}
-  outbox:
-    enabled: ${APP_OUTBOX_ENABLED:true}
-    interval: ${APP_OUTBOX_INTERVAL:5000}
-
-resilience4j:
-  circuitbreaker:
-    instances:
-      java17HttpStrategy:
-        slidingWindowSize: 4
-        failureRateThreshold: 5
-        waitDurationInOpenState: 10000
-        permittedNumberOfCallsInHalfOpenState: 2
-
 server:
   port: ${SERVER_PORT:8081}
 
@@ -40,3 +20,22 @@ spring:
     bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
     producer:
       acks: all
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      java17HttpStrategy:
+        slidingWindowSize: 4
+        failureRateThreshold: 5
+        waitDurationInOpenState: 10000
+        permittedNumberOfCallsInHalfOpenState: 2
+
+app:
+  api:
+    http-enabled: ${APP_API_HTTP_ENABLED:true}
+    url: ${APP_API_URL:http://localhost:8081}
+  messaging:
+    input-topic: ${APP_MESSAGING_INPUT_TOPIC:stochastic-input}
+  outbox:
+    enabled: ${APP_OUTBOX_ENABLED:true}
+    interval: ${APP_OUTBOX_INTERVAL:5000}
