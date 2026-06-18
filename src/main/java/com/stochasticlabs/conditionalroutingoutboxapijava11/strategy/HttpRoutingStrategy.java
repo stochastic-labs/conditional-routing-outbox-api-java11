@@ -24,7 +24,7 @@ public class HttpRoutingStrategy implements RoutingStrategy {
 
     private final HttpClient httpClient;
 
-    @Value("${app.api.url}")
+    @Value("${app.api.java17.url}")
     private String url;
 
     @Override
